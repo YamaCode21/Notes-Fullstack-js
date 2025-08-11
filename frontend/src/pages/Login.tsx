@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import "../styles/global.css";
+import InputText from "../components/InputText";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ const Login = () => {
 
   return (
     <div className="bg-gray-950 flex flex-col justify-center items-center h-screen gap-5">
-      <div className="flex gap-1 text-3xl font-black title-shadow">
+      <div className="flex gap-1 text-4xl outfit-black title-shadow">
         <p className="text-white">Tudu</p>
         <p className="text-purple-500">List</p>
       </div>
@@ -39,17 +40,19 @@ const Login = () => {
         >
           {/* Tarjeta de Inicio de Sesión (Front) */}
           <div className="absolute w-full h-full backface-hidden bg-gray-700 rounded-lg shadow-lg p-8 flex flex-col justify-center items-center gap-5">
-            <h2 className="text-2xl font-bold mb-4 text-purple-500">Iniciar Sesión</h2>
+            <h2 className="text-2xl outfit-bold mb-4 text-purple-500">
+              Iniciar Sesión
+            </h2>
             <form className="flex flex-col items-center gap-4 w-full">
-              <input
+              <InputText
                 type="email"
-                placeholder="Correo electrónico"
-                className="p-2 border border-gray-300 rounded bg-white"
+                placeholder="Correo"
+                onChange={() => {}}
               />
-              <input
+              <InputText
                 type="password"
                 placeholder="Contraseña"
-                className="p-2 border border-gray-300 rounded bg-white"
+                onChange={() => {}}
               />
               <button
                 type="submit"
