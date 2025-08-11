@@ -1,0 +1,15 @@
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.title-shadow {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
