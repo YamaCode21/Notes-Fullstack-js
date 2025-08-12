@@ -4,8 +4,17 @@ import "../styles/global.css";
 import InputText from "../components/InputText";
 
 const Login = () => {
+  
+  // Iniciar Sesión
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Crear Cuenta
+  const [nombre, setNombre] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
+
   const [error, setError] = useState("");
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -27,43 +36,46 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gray-950 flex flex-col justify-center items-center h-screen gap-5">
+    <div className="bg-gray-900 flex flex-col justify-center items-center h-screen gap-5">
       <div className="flex gap-1 text-4xl outfit-black title-shadow">
         <p className="text-white">Tudu</p>
-        <p className="text-purple-500">List</p>
+        <p className="text-violet-500">List</p>
       </div>
-      <div className="bg-transparent w-[300px] h-[400px] perspective-[1000px]">
+      <div className="bg-transparent w-[400px] h-[400px] perspective-[1000px]">
         <div
           className={`relative w-full h-full transition-transform duration-700 rounded-2xl transform-style-preserve-3d ${
             isFlipped ? "rotate-y-180" : ""
           }`}
         >
           {/* Tarjeta de Inicio de Sesión (Front) */}
-          <div className="absolute w-full h-full backface-hidden bg-gray-700 rounded-lg shadow-lg p-8 flex flex-col justify-center items-center gap-5">
-            <h2 className="text-2xl outfit-bold mb-4 text-purple-500">
+          <div className="absolute w-full h-full backface-hidden bg-slate-700 rounded-lg shadow-lg p-8 flex flex-col justify-center items-center gap-5">
+            <h2 className="text-2xl outfit-bold mb-4 text-violet-500">
               Iniciar Sesión
             </h2>
             <form className="flex flex-col items-center gap-4 w-full">
               <InputText
                 type="email"
+                value={email}
                 placeholder="Correo"
-                onChange={() => {}}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <InputText
                 type="password"
+                isPassword={true}
+                value={password}
                 placeholder="Contraseña"
-                onChange={() => {}}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 type="submit"
-                className="bg-blue-500 w-1/2 !p-1 text-white rounded hover:bg-blue-600 transition"
+                className="bg-violet-600 w-1/3 !p-3 text-white outfit-bold hover:bg-violet-500 cursor-pointer rounded-2xl transition"
               >
                 Ingresar
               </button>
               <button
                 type="button"
                 onClick={toggleFlip}
-                className="text-blue-500 hover:underline"
+                className="text-violet-500 outfit-semibold hover:scale-105 transition-all cursor-pointer"
               >
                 Crear Cuenta
               </button>
@@ -71,34 +83,37 @@ const Login = () => {
           </div>
 
           {/* Tarjeta de Creación de Cuenta (Back) */}
-          <div className="absolute w-full h-full gap-5 backface-hidden bg-white rounded-lg shadow-lg p-8 flex flex-col justify-center items-center [transform:rotateY(180deg)]">
-            <h2 className="text-2xl font-bold mb-4">Crear Cuenta</h2>
+          <div className="absolute w-full h-full gap-5 backface-hidden bg-violet-800 rounded-lg shadow-lg p-8 flex flex-col justify-center items-center [transform:rotateY(180deg)]">
+            <h2 className="text-2xl font-bold text-white mb-4">Crear Cuenta</h2>
             <form className="flex flex-col items-center gap-4 w-full">
-              <input
+              <InputText
                 type="text"
+                value={nombre}
                 placeholder="Nombre de usuario"
-                className="p-2 border border-gray-300 rounded"
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <input
+              <InputText
                 type="email"
+                value={newEmail}
                 placeholder="Correo electrónico"
-                className="p-2 border border-gray-300 rounded"
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <input
+              <InputText
                 type="password"
-                placeholder="Contraseña"
-                className="p-2 border border-gray-300 rounded"
+                value={newPassword}
+                placeholder="Constraseña"
+                onChange={(e) => setEmail(e.target.value)}
               />
               <button
                 type="submit"
-                className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+                className="bg-black w-1/3 outfit-bold text-white !p-3 rounded-xl hover:bg-gray-800 transition cursor-pointer"
               >
                 Registrarse
               </button>
               <button
                 type="button"
                 onClick={toggleFlip}
-                className="text-blue-500 hover:underline"
+                className="text-white outfit-semibold hover:scale-105 transition-all cursor-pointer"
               >
                 Volver a Iniciar Sesión
               </button>
