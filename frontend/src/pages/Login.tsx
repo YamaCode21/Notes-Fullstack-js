@@ -90,19 +90,20 @@ const Login = () => {
                 type="text"
                 value={nombre}
                 placeholder="Nombre de usuario"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setNombre(e.target.value)}
               />
               <InputText
                 type="email"
                 value={newEmail}
                 placeholder="Correo electrónico"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setNewEmail(e.target.value)}
               />
               <InputText
                 type="password"
                 value={newPassword}
+                isPassword={true}
                 placeholder="Constraseña"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
               <button
                 type="submit"
