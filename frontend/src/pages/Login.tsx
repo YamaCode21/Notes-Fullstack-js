@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import "../styles/global.css";
 import InputText from "../components/InputText";
+import { useAuthStore } from "../store/authStore";
 
 const Login = () => {
   
@@ -14,26 +15,27 @@ const Login = () => {
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-
-  const [error, setError] = useState("");
-
   const [isFlipped, setIsFlipped] = useState(false);
 
   const toggleFlip = () => {
     setIsFlipped(!isFlipped);
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
+  // Zustand
+  const login = useAuthStore((state) => state.login);
+  const register = useAuthStore((state) => state.register);
+  const error = useAuthStore((state) => state.error);
+
+  const handleLoginSubmit = async (e: any) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/login", { email, password });
-      console.log("Login successful:", response.data);
-      // Redirect or update state as needed
-    } catch (err) {
-      setError("Login failed. Please check your credentials.");
-      console.error(err);
-    }
-  };
+    await login(email, password);
+  }
+
+  const handleRegisterSubmit = async (e: any) => {
+    e.preventDefault();
+    await register(nombre, newEmail, newPassword);
+    setIsFlipped(false);
+  }
 
   return (
     <div className="bg-gray-900 flex flex-col justify-center items-center h-screen gap-5">
@@ -52,7 +54,7 @@ const Login = () => {
             <h2 className="text-2xl outfit-bold mb-4 text-violet-500">
               Iniciar Sesión
             </h2>
-            <form className="flex flex-col items-center gap-4 w-full">
+            <form className="flex flex-col items-center gap-4 w-full" onSubmit={handleLoginSubmit}>
               <InputText
                 type="email"
                 value={email}
@@ -85,7 +87,7 @@ const Login = () => {
           {/* Tarjeta de Creación de Cuenta (Back) */}
           <div className="absolute w-full h-full gap-5 backface-hidden bg-violet-800 rounded-lg shadow-lg p-8 flex flex-col justify-center items-center [transform:rotateY(180deg)]">
             <h2 className="text-2xl font-bold text-white mb-4">Crear Cuenta</h2>
-            <form className="flex flex-col items-center gap-4 w-full">
+            <form className="flex flex-col items-center gap-4 w-full" onSubmit={handleRegisterSubmit}>
               <InputText
                 type="text"
                 value={nombre}

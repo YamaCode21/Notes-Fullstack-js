@@ -1,18 +1,25 @@
-import './App.css'
-import { Route, Routes } from 'react-router-dom'
-import Login from './pages/Login'
-import Notes from './pages/Notes'
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-
   return (
     <>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/notes" element={<Notes />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

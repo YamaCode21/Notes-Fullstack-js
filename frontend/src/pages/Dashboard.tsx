@@ -1,6 +1,6 @@
 import Navbar from "../layouts/Navbar";
 
-const Notes = () => {
+const Dashboard = () => {
   return (
     <div className="flex items-center justify-between h-screen bg-gray-100">
       <aside className="bg-slate-700 text-white w-64 h-full p-4">
@@ -30,4 +30,4 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default Dashboard;

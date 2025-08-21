@@ -28,6 +28,6 @@ exports.up = async function(knex) {
  * @returns { Promise<void> }
  */
 exports.down = async function(knex) {
-  await knex.schema.dropTableIfExists('users');
   await knex.schema.dropTableIfExists('notes');
+  await knex.schema.dropTableIfExists('users');
 };

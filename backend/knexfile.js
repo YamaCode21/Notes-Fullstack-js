@@ -9,6 +9,6 @@ module.exports = {
     migrations: {
       directory: './migrations'
     },
-    userNullAsDefault: true
+    useNullAsDefault: true
   }
 };
