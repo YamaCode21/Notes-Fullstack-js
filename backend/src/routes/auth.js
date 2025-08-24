@@ -3,25 +3,45 @@ const router = express.Router();
 const db = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret";
+const JWT_EXPIRES = "8h";
 
 router.post("/register", async (req, res) => {
   try {
     const { email, password, name } = req.body;
+
+    if(!email || !password || !name) {
+      return res.status(422).json({
+        succes: false,
+        message: "Faltan datos obligatorios",
+      });
+    }
 
     // Verificar existencia del usuario
     const exists = await db("users").where({ email }).first();
     if (exists)
       return res.status(400).json({ message: "El correo ya esta registrado" });
 
-    const hash = await bcrypt.hash(password, 10);
+    // Hashear la contraseña
+    const hash = await bcrypt.hash(password, 12);
+
+    // Insertar usuario
     const [id] = await db("users").insert({ email, password: hash, name });
-    res.status(201).json({ id, email, name });
+    
+    res.status(201).json({
+      success: true,
+      user: { id, email, name },
+      message: "Usuario registrado correctamente",
+    });
+
   } catch (error) {
     console.error("Error al registrar usuario:", error);
     res.status(500).json({ message: "Error interno del servidor" });
   }
 });
+
+// 6:43 AM Nota:sigue el login
 
 router.post("/login", async (req, res) => {
   try {
