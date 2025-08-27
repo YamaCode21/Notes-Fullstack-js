@@ -11,7 +11,7 @@ router.post("/register", async (req, res) => {
   try {
     const { email, password, name } = req.body;
 
-    if(!email || !password || !name) {
+    if (!email || !password || !name) {
       return res.status(422).json({
         succes: false,
         message: "Faltan datos obligatorios",
@@ -28,13 +28,12 @@ router.post("/register", async (req, res) => {
 
     // Insertar usuario
     const [id] = await db("users").insert({ email, password: hash, name });
-    
+
     res.status(201).json({
       success: true,
       user: { id, email, name },
       message: "Usuario registrado correctamente",
     });
-
   } catch (error) {
     console.error("Error al registrar usuario:", error);
     res.status(500).json({ message: "Error interno del servidor" });
@@ -46,23 +45,44 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(422).json({
+        succes: false,
+        message: "Faltan credenciales (email y password)",
+      });
+    }
+
+    // Buscar usuario
     const user = await db("users").where({ email }).first();
-    if (!user)
-      return res.status(401).json({ message: "Credenciales invalidas" });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ succes: false, message: "Credenciales invalidas" });
+    }
 
+    // Comparar contraseñas
     const ok = await bcrypt.compare(password, user.password);
-    if (!ok) return res.status(401).json({ message: "Credenciales invalidas" });
+    if (!ok) {
+      return res
+        .status(401)
+        .json({ succes: false, message: "Credenciales invalidas" });
+    }
 
+    // Generar token
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
-      expiresIn: "8h",
+      expiresIn: JWT_EXPIRES, algorithm: "HS256",
     });
-    res.json({
+
+    return res.json({
+      success: true,
       token,
       user: { id: user.id, email: user.email, name: user.name },
+      message: "Login exitoso",
     });
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
-    res.status(500).json({ message: "Error interno del servidor" });
+    return res.status(500).json({ succes: false, message: "Error interno del servidor" });
   }
 });
 

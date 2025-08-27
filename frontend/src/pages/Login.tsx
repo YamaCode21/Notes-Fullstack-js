@@ -1,4 +1,4 @@
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../styles/global.css";
 import InputText from "../components/InputText";
@@ -15,7 +15,11 @@ const Login = () => {
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
+  // Animacion de la card
   const [isFlipped, setIsFlipped] = useState(false);
+
+  // Variable de navegación
+  const navigate = useNavigate();
 
   const toggleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -29,6 +33,7 @@ const Login = () => {
   const handleLoginSubmit = async (e: any) => {
     e.preventDefault();
     await login(email, password);
+    navigate("/dashboard");
   }
 
   const handleRegisterSubmit = async (e: any) => {

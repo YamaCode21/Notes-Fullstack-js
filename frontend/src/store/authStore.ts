@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import axios from "axios";
 import { persist } from "zustand/middleware";
+import api from "../api/axiosConfig";
 
 interface AuthState {
   user: any;
@@ -20,7 +20,7 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (email, password) => {
         try {
-          const response = await axios.post("/api/login", { email, password });
+          const response = await api.post("/auth/login", { email, password });
           set({
             user: response.data.user,
             token: response.data.token,
@@ -33,7 +33,7 @@ export const useAuthStore = create<AuthState>()(
 
       register: async (name, email, password) => {
         try {
-          const response = await axios.post("/api/register", {
+          const response = await api.post("/auth/register", {
             email,
             password,
             name,
