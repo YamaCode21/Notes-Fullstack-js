@@ -15,7 +15,7 @@ router.get('/test-db', async (req, res) => {
 
 router.get("/usuarios", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM usuarios");
+    const [rows] = await db.raw("SELECT * FROM users");
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
