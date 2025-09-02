@@ -4,14 +4,26 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import { useAuthStore } from "./store/authStore";
+import { Toaster } from "react-hot-toast";
 
 function App() {
-  const { token } = useAuthStore();
+  const token = useAuthStore((state) => state.token);
+
+  const isAuthenticated = !!token;
 
   return (
     <>
       <Routes>
-        <Route path="/" element={token ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route
           path="/dashboard"
@@ -22,6 +34,7 @@ function App() {
           }
         />
       </Routes>
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 }

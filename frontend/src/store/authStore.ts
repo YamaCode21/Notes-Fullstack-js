@@ -6,8 +6,8 @@ interface AuthState {
   user: any;
   token: string | null;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -26,8 +26,10 @@ export const useAuthStore = create<AuthState>()(
             token: response.data.token,
             error: null,
           });
+          return true;
         } catch (error: any) {
           set({ error: error.response?.data?.message || "Error en login" });
+          return false;
         }
       },
 
@@ -39,8 +41,10 @@ export const useAuthStore = create<AuthState>()(
             name,
           });
           set({ user: response.data, token: null, error: null });
+          return true;
         } catch (error: any) {
           set({ error: error.response?.data?.message || "Error en registro" });
+          return false;
         }
       },
 

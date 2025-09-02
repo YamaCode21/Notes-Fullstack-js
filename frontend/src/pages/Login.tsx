@@ -3,6 +3,7 @@ import { useState } from "react";
 import "../styles/global.css";
 import InputText from "../components/InputText";
 import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
 const Login = () => {
   
@@ -32,14 +33,24 @@ const Login = () => {
 
   const handleLoginSubmit = async (e: any) => {
     e.preventDefault();
-    await login(email, password);
-    navigate("/dashboard");
+    const success = await login(email, password);
+    if (success) {
+      toast.success("¡Bienvenido!");
+      navigate("/dashboard");
+    } else {
+      toast.error(error || "Credenciales incorrectas");
+    }
   }
 
   const handleRegisterSubmit = async (e: any) => {
     e.preventDefault();
-    await register(nombre, newEmail, newPassword);
-    setIsFlipped(false);
+    const success = await register(nombre, newEmail, newPassword);
+    if (success) {
+      toast.success("Cuenta creada correctamente");
+      setIsFlipped(false);
+    } else {
+      toast.error(error || "Error al crear cuenta");
+    }
   }
 
   return (
