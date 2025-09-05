@@ -39,7 +39,7 @@ router.put("/:id", auth, async (req, res) => {
   try {
     const updated = await db("notes")
       .where({ id, user_id: req.user.id })
-      .updated({
+      .update({
         title,
         content,
         pinned,
