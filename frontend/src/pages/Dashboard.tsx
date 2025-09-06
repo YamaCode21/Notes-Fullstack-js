@@ -1,32 +1,15 @@
-import Navbar from "../layouts/Navbar";
+import { useEffect, useState } from "react";
+import DashboardLayout from "../layouts/DashboardLayout";
+import type { Note } from "../types/Notas";
 
 const Dashboard = () => {
   return (
-    <div className="flex items-center justify-between h-screen bg-gray-100">
-      <aside className="bg-slate-700 text-white w-64 h-full p-4">
-        <nav className="flex flex-col">
-          <h2 className="text-xl font-bold mb-4">Navigation</h2>
-          <ul>
-            <li className="mb-2">
-              <a href="/">Home</a>
-            </li>
-            <li className="mb-2">
-              <a href="/notes">Notes</a>
-            </li>
-            <li className="mb-2">
-              <a href="/settings">Settings</a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-      <div className="bg-gray-900 w-full h-full flex flex-col">
-        <Navbar />
-        <div className="flex flex-col !p-10 text-white">
-          <h1 className="text-3xl font-bold mb-4">Notes Page</h1>
-          <p className="text-lg">This is the Notes page.</p>
-        </div>
+    <DashboardLayout>
+      <div className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Welcome to the Dashboard</h1>
+        <p>This is your dashboard where you can manage your notes and settings.</p>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

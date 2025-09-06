@@ -3,13 +3,30 @@ const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth");
 
+// Para formatear la fecha en las respuestas
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+
+// Extender dayjs con plugins
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+
 router.get("/", auth, async (req, res) => {
   try {
     const notes = await db("notes")
       .where({ user_id: req.user.id })
       .whereNull("deleted_at")
       .orderBy("created_at", "desc");
-    res.json(notes);
+
+    const formatted = notes.map(note => ({
+      ...note,
+      created_at: note.created_at ? dayjs.utc(note.created_at).tz("America/Lima").format("YYYY-MM-DD HH:mm:ss") : null,
+      updated_at: note.updated_at ? dayjs.utc(note.updated_at).tz("America/Lima").format("YYYY-MM-DD HH:mm:ss") : null,
+      deleted_at: note.deleted_at ? dayjs.utc(note.deleted_at).tz("America/Lima").format("YYYY-MM-DD HH:mm:ss") : null,
+    }))
+    res.json(formatted);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener las notas" });
   }
