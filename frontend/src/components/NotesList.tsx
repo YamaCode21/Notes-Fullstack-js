@@ -1,18 +1,8 @@
 import type { FC } from "react";
-
-type Notes = {
-  id: number;
-  user_id: number;
-  title: string;
-  content: string;
-  pinned: boolean;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
+import type { Note } from '../types/Notas';
 
 type NotesListProps = {
-  notes: Notes[];
+  notes: Note[];
 };
 
 const NoteList: FC<NotesListProps> = ({ notes }) => {
@@ -21,20 +11,20 @@ const NoteList: FC<NotesListProps> = ({ notes }) => {
   }
 
   return (
-    <ul className="space-y-2">
+    <div className="flex flex-wrap justify-around">
       {notes.map((note) => (
-        <li
+        <div
           key={note.id}
-          className="bg-white p-3 rounded shadow-md text-black"
+          className="bg-white p-3 rounded shadow-md text-black max-w-96"
         >
           <h2 className="text-lg font-semibold">{note.title}</h2>
           <p>{note.content}</p>
           <small className="text-gray-500">
             Creada: {note.created_at}
           </small>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   )
 }
 

@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/DashboardPage";
 import PrivateRoute from "./components/PrivateRoute";
 import { useAuthStore } from "./store/authStore";
 import { Toaster } from "react-hot-toast";

@@ -1,11 +1,16 @@
 import { Navigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
-import type { JSX } from "react";
+import { isTokenValid } from "../utils/isTokenValid";
+import type { ReactNode } from "react";
 
-const PrivateRoute = ({ children }: { children: JSX.Element }) => {
-  const { token } = useAuthStore();
+const PrivateRoute = ({ children }: { children: ReactNode }) => {
+  const token = useAuthStore((state) => state.token);
 
-  return token ? children : <Navigate to="/login" replace />;
+  if (!isTokenValid(token)) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 };
 
 export default PrivateRoute;
