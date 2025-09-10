@@ -45,7 +45,7 @@ const DashboardPage = () => {
   return (
     <DashboardLayout>
       <div className="!ps-4 !pt-2 flex flex-col">
-        <h1 className="text-2xl outfit-bold mb-4 text-white">Mis Notas</h1>
+        <h1 className="text-2xl outfit-bold !mb-4 text-white">Mis Notas</h1>
 
         {loading && <p>Cargando notas...</p>}
         {error && <p className="text-red-500">Error: {error}</p>}

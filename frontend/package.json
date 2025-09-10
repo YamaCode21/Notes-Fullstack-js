@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/vite": "^4.1.11",
+    "aos": "^2.3.4",
     "axios": "^1.11.0",
+    "date-fns": "^4.1.0",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
+    "@types/aos": "^3.0.7",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.7.0",
