@@ -1,3 +1,4 @@
+import CreateNoteButton from "../components/CreateNoteButton";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../layouts/Navbar";
 import type { ReactNode } from "react";
@@ -14,6 +15,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <Navbar />
         <main>
           {children}
+          <CreateNoteButton onclick={() => { alert("Crear nota") }} />
         </main>
       </div>
     </div>
