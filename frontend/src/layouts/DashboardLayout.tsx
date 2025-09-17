@@ -1,13 +1,14 @@
-import CreateNoteButton from "../components/CreateNoteButton";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../layouts/Navbar";
-import type { ReactNode } from "react";
+import type { ReactNode} from "react";
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+
+
   return (
     <div className="flex items-center justify-between h-screen bg-gray-100">
       <Sidebar />
@@ -15,7 +16,6 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <Navbar />
         <main>
           {children}
-          <CreateNoteButton onclick={() => { alert("Crear nota") }} />
         </main>
       </div>
     </div>

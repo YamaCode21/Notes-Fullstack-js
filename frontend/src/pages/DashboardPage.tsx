@@ -4,12 +4,15 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import NoteList from "../components/NotesList";
 import type { Note } from "../types/Notas";
 import { useNavigate } from "react-router-dom";
+import CreateNoteButton from "../components/CreateNoteButton";
+import CreateNoteModal from "../Modals/CreateNoteModal";
 
 const DashboardPage = () => {
   const token = useAuthStore((state) => state.token);
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isCreateNoteOpen, setIsCreateNoteOpen] = useState(false);
   const navigate = useNavigate();
 
   if (!token) {
@@ -17,28 +20,26 @@ const DashboardPage = () => {
     return null; // evita renderizar el dashboard
   }
 
+  const fetchNotes = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/notes", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      if (!res.ok) throw new Error("Error al obtener las notas");
+
+      const data: Note[] = await res.json();
+      setNotes(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error desconocido");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchNotes = async () => {
-
-      try {
-        const res = await fetch("http://localhost:3000/api/notes", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-
-        console.log("Este es mi token:" + token);
-
-        if (!res.ok) throw new Error("Error al obtener las notas");
-
-        const data: Note[] = await res.json();
-        setNotes(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Error desconocido");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchNotes();
   }, [token]);
 
@@ -49,7 +50,12 @@ const DashboardPage = () => {
 
         {loading && <p>Cargando notas...</p>}
         {error && <p className="text-red-500">Error: {error}</p>}
-        {!loading && !error && <NoteList notes={notes} />}        
+        {!loading && !error && <NoteList notes={notes} />}
+        <CreateNoteButton onclick={() => setIsCreateNoteOpen(true)} />
+
+        {isCreateNoteOpen && (
+          <CreateNoteModal onClose={() => setIsCreateNoteOpen(false)} onNoteCreated={fetchNotes} />
+        )}
       </div>
     </DashboardLayout>
   );
