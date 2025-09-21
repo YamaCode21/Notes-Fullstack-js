@@ -2,8 +2,14 @@ import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useAuthStore } from "../store/authStore";
 
-const CreateNoteModal = ({ onClose, onNoteCreated }: { onClose: () => void, onNoteCreated: () => {} }) => {
-    const token = useAuthStore((state) => state.token);
+const CreateNoteModal = ({
+  onClose,
+  onNoteCreated,
+}: {
+  onClose: () => void;
+  onNoteCreated: () => {};
+}) => {
+  const token = useAuthStore((state) => state.token);
   const [show, setShow] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
   const [title, setTitle] = useState("");
@@ -97,13 +103,16 @@ const CreateNoteModal = ({ onClose, onNoteCreated }: { onClose: () => void, onNo
           />
           <div className="flex justify-end mt-4 gap-2">
             <button
-            type="button"
+              type="button"
               onClick={handleClose}
               className="!px-4 !py-2 rounded-lg bg-gray-300 hover:bg-gray-400"
             >
               Cancelar
             </button>
-            <button type="submit" className="!px-4 !py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white">
+            <button
+              type="submit"
+              className="!px-4 !py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white"
+            >
               Guardar
             </button>
           </div>
