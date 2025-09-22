@@ -2,6 +2,7 @@ import { formatDistanceToNow, set } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState, type FC } from "react";
 import type { Note } from "../types/Notas";
+import { Icon } from "@iconify/react";
 
 type NotesListProps = {
   notes: Note[];
@@ -10,12 +11,14 @@ type NotesListProps = {
 
 const NoteList: FC<NotesListProps> = ({ notes, onUpdate }) => {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [isPinned, setIsPinned] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const [show, setShow] = useState(false);
 
   const openModal = (note: Note) => {
     setSelectedNote(note);
+    setIsPinned(note.pinned);
     setEditedTitle(note.title);
     setEditedContent(note.content);
     setShow(true);
@@ -84,48 +87,69 @@ const NoteList: FC<NotesListProps> = ({ notes, onUpdate }) => {
               : "opacity-0 scale-90 translate-y-4"
           }`}
         >
-            <div>
-              <h2 className="text-xl font-bold">Editar Nota</h2>
-              <label
-                className="block text-sm font-medium text-gray-700"
-                htmlFor=""
-              >
-                Título:
-              </label>
-              <input
-                type="text"
-                value={editedTitle}
-                onChange={(e) => setEditedTitle(e.target.value)}
-                className="w-full border rounded-md p-2 mb-3"
+          <div>
+            <h2 className="text-xl font-bold">Editar Nota</h2>
+            <button
+              role="checkbox"
+              aria-checked={isPinned}
+              onClick={() => setIsPinned(!isPinned)}
+              className="top-6 right-5 absolute rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
+            >
+              <Icon
+                icon="mdi:pin"
+                width="28"
+                height="28"
+                className={isPinned ? "text-black" : "text-gray-400"}
               />
+            </button>
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor=""
+            >
+              Título:
+            </label>
+            <input
+              type="text"
+              value={editedTitle}
+              onChange={(e) => setEditedTitle(e.target.value)}
+              className="w-full border rounded-md p-2 mb-3"
+            />
 
-              <label
-                className="block text-sm font-medium text-gray-700"
-                htmlFor=""
-              >
-                Contenido:
-              </label>
-              <textarea
-                value={editedContent}
-                onChange={(e) => setEditedContent(e.target.value)}
-                className="w-full border rounded-md p-2 h-32 mb-4"
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor=""
+            >
+              Contenido:
+            </label>
+            <textarea
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+              className="w-full border rounded-md p-2 h-32 mb-4"
+            />
+
+            <button className="absolute bottom-7.5 left-7" onClick={closeModal}>
+              <Icon
+                icon="tabler:trash"
+                width="28"
+                height="28"
+                className="text-red-400 transition-colors duration-300 hover:text-red-600 cursor-pointer"
               />
-
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={closeModal}
-                  className="!px-4 !py-2 bg-gray-300 rounded-md"
-                >
-                  Cancelar
-                </button>
-                <button
-                  onClick={handleSave}
-                  className="!px-4 !py-2 bg-violet-600 text-white rounded-md"
-                >
-                  Guardar
-                </button>
-              </div>
+            </button>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={closeModal}
+                className="!px-4 !py-2 bg-gray-300 rounded-md"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleSave}
+                className="!px-4 !py-2 bg-violet-600 text-white rounded-md"
+              >
+                Guardar
+              </button>
             </div>
+          </div>
         </div>
       </div>
     </>

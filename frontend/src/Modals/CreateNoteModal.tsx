@@ -77,7 +77,7 @@ const CreateNoteModal = ({
           role="checkbox"
           aria-checked={isPinned}
           onClick={() => setIsPinned(!isPinned)}
-          className="top-6 right-5 absolute rounded-full hover:bg-gray-200 transition-colors"
+          className="top-6 right-5 absolute rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
         >
           <Icon
             icon="mdi:pin"
