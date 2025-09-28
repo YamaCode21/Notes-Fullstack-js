@@ -1,4 +1,4 @@
-import { formatDistanceToNow, set } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import { useState, type FC } from "react";
 import type { Note } from "../types/Notas";
@@ -7,9 +7,10 @@ import { Icon } from "@iconify/react";
 type NotesListProps = {
   notes: Note[];
   onUpdate?: (note: Note) => void;
+  onDelete?: (noteId: number) => void;
 };
 
-const NoteList: FC<NotesListProps> = ({ notes, onUpdate }) => {
+const NoteList: FC<NotesListProps> = ({ notes, onUpdate, onDelete }) => {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [isPinned, setIsPinned] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
@@ -37,9 +38,17 @@ const NoteList: FC<NotesListProps> = ({ notes, onUpdate }) => {
         ...selectedNote,
         title: editedTitle,
         content: editedContent,
+        pinned: isPinned,
       });
     }
     closeModal();
+  };
+
+  const handleDelete = () => {
+    if (selectedNote && onDelete) {
+      onDelete(selectedNote.id);
+      closeModal();
+    }
   };
 
   if (notes.length === 0) {
@@ -127,7 +136,7 @@ const NoteList: FC<NotesListProps> = ({ notes, onUpdate }) => {
               className="w-full border rounded-md p-2 h-32 mb-4"
             />
 
-            <button className="absolute bottom-7.5 left-7" onClick={closeModal}>
+            <button className="absolute bottom-7.5 left-7" onClick={handleDelete}>
               <Icon
                 icon="tabler:trash"
                 width="28"
@@ -146,7 +155,7 @@ const NoteList: FC<NotesListProps> = ({ notes, onUpdate }) => {
                 onClick={handleSave}
                 className="!px-4 !py-2 bg-violet-600 text-white rounded-md"
               >
-                Guardar
+                Actualizar
               </button>
             </div>
           </div>
