@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useAuthStore } from "../store/authStore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LabelsSection from "./LabelsSection";
 
 
@@ -27,20 +27,20 @@ const Sidebar = () => {
           <nav className="flex flex-col outfit-medium w-9/12">
             <ul className="flex flex-col !px-2 gap-1">
               <li className="mb-2">
-                <a href="/dashboard" className="flex items-center">
+                <Link to="/dashboard" className="flex items-center">
                   <Icon
                     icon="solar:notes-bold-duotone"
                     width="18"
                     height="18"
                   />{" "}
                   Notas
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="/papelera" className="flex items-center">
+                <Link to="/papelera" className="flex items-center">
                   <Icon icon="solar:paper-bin-bold" width="18" height="18" />{" "}
                   Papelera
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
                 <button

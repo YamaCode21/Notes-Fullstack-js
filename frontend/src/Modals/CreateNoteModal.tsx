@@ -7,7 +7,7 @@ const CreateNoteModal = ({
   onNoteCreated,
 }: {
   onClose: () => void;
-  onNoteCreated: () => {};
+  onNoteCreated?: () => {};
 }) => {
   const token = useAuthStore((state) => state.token);
   const [show, setShow] = useState(false);
@@ -43,7 +43,6 @@ const CreateNoteModal = ({
           pinned: isPinned,
         }),
       });
-
       if (!res.ok) {
         throw new Error("Error al guardar la nota");
       }
@@ -51,7 +50,7 @@ const CreateNoteModal = ({
       const newNote = await res.json();
       console.log("Nota creada:", newNote);
 
-      onNoteCreated(); // refresca la lista de notas en el padre
+      if(onNoteCreated) onNoteCreated(); // refresca la lista de notas en el padre
       handleClose(); // cierra modal al guardar
     } catch (error) {
       console.error(error);

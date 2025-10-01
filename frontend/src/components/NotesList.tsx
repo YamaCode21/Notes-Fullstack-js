@@ -8,9 +8,10 @@ type NotesListProps = {
   notes: Note[];
   onUpdate?: (note: Note) => void;
   onDelete?: (noteId: number) => void;
+  refreshNotes?: () => void;
 };
 
-const NoteList: FC<NotesListProps> = ({ notes, onUpdate, onDelete }) => {
+const NoteList: FC<NotesListProps> = ({ notes, onUpdate, onDelete, refreshNotes }) => {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [isPinned, setIsPinned] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
@@ -41,12 +42,14 @@ const NoteList: FC<NotesListProps> = ({ notes, onUpdate, onDelete }) => {
         pinned: isPinned,
       });
     }
+    if (refreshNotes) refreshNotes();
     closeModal();
   };
 
   const handleDelete = () => {
     if (selectedNote && onDelete) {
       onDelete(selectedNote.id);
+      if (refreshNotes) refreshNotes();
       closeModal();
     }
   };
